@@ -55,9 +55,10 @@ class Classifier_Trainer(object):
             total_loss = hair_loss + gender_loss + earring_loss + smile_loss + frontal_loss + style_loss
             total_loss.backward()  # 误差回传
             self.optimer.step()  # 更新参数
+            self.optimer.zero_grad()  # 梯度归零
             temp_loss += total_loss.item()  # 累加这个batch(这批数据)的loss
             # 打印loss信息
-            if (batch_idx + 1) % 50 == 0:
+            if (batch_idx + 1) % (len(self.train_loader)//4) == 0:
                 print("Epoch: %d/%d, training batch_idx:%d , time: %s, loss: %.4f" % (
                     epoch, self.epoches, batch_idx + 1, timeSince(self.start_time), total_loss.item()))
         # 返回epoch_loss

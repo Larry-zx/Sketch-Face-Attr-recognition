@@ -11,5 +11,5 @@ json_test_path = 'FS2K/anno_test.json'
 DEVICE_ID = '0'  # 显卡ID
 Epoches = 50
 batch_szie = 16
-lr = 4e-4
+lr = 1e-5
 model_type = 'Resnet18'
