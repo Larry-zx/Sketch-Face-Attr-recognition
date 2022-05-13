@@ -33,7 +33,7 @@ class Classifier_Trainer(object):
                                       self.transform)  # 测试数据加载器
 
         self.model = multiattribute_Model(model_type, pretrained).to(self.device)  # 根据model_type构建模型
-        self.optimer = optim.Adam(self.model.parameters(), lr=self.learning_rate, betas=[0.5, 0.999])  # 优化器 负责更新参数
+        self.optimer = optim.Adam(self.model.parameters(), lr=self.learning_rate)  # 优化器 负责更新参数
         self.scheduler = optim.lr_scheduler.MultiStepLR(self.optimer, [30, 80], gamma=0.1)  # 负责调节学习率
 
     def train(self, epoch):
@@ -87,7 +87,7 @@ class Classifier_Trainer(object):
                 for i in range(batch):
                     for attr_idx, attr in enumerate(self.selected_attrs):
                         pred = np.argmax(out_dict[attr][i].data.cpu().numpy())  # 得到预测值
-                        true_label = labels[attr_idx].data.cpu().numpy()[0]  # 得到label
+                        true_label = labels[attr_idx].data.cpu().numpy()[i]  # 得到label
                         if pred == true_label:
                             correct_dict[attr] = correct_dict[attr] + 1
                         predict_dict[attr].append(pred)
