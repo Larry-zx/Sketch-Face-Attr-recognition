@@ -120,8 +120,7 @@ class Classifier_Trainer(object):
             running_loss = self.train(epoch)
             if epoch > self.epoches // 2:
                 self.scheduler.step()
-            print("Epoch: %d, time: %s, loss: %.4f , lr:%.4f" % (
-            epoch, timeSince(self.start_time), running_loss, self.learning_rate))
+            print("Epoch: %d, time: %s, loss: %.4f , lr:%.7f" % (epoch, timeSince(self.start_time), running_loss, self.learning_rate))
             correct_dict, mAP, predict_dict, label_dict = self.evaluate()
             print("Epoch: {} accuracy:{}".format(epoch, correct_dict))
             print("Epoch: {} mAP: {}".format(epoch, mAP))
