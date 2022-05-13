@@ -118,8 +118,10 @@ class Classifier_Trainer(object):
         self.start_time = time.time()
         for epoch in range(self.epoches):
             running_loss = self.train(epoch)
-            self.scheduler.step() #调整学习率
-            print("Epoch: %d, time: %s, loss: %.4f" % (epoch, timeSince(self.start_time), running_loss))
+            if epoch > self.epoches // 2:
+                self.scheduler.step()
+            print("Epoch: %d, time: %s, loss: %.4f , lr:%.4f" % (
+            epoch, timeSince(self.start_time), running_loss, self.learning_rate))
             correct_dict, mAP, predict_dict, label_dict = self.evaluate()
             print("Epoch: {} accuracy:{}".format(epoch, correct_dict))
             print("Epoch: {} mAP: {}".format(epoch, mAP))
